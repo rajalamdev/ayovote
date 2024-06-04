@@ -87,7 +87,7 @@ export default function Home() {
               </thead>
               <tbody>
                 {votes.length && votes && votes.map((vote: Vote, index: number) => (
-                  <tr className="text-sm">
+                <tr className="text-sm" key={index}>
                   <td className="text-left p-5 border border-zinc-200">{index + 1}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.title}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.candidates.map((candidate) => (

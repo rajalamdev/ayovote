@@ -128,7 +128,9 @@ export default function CreateVote(){
                         <h3 className="text-xl font-semibold mb-4">Kandidat</h3>
                         <div className="grid grid-cols-4 gap-4">
                             {candidates.map((candidate: Candidate, index: number) => (
-                                <CandidateForm candidate={candidate} key={candidate.key} submitCandidate={submitCandidate} />
+                                <div key={index}>
+                                    <CandidateForm candidate={candidate} key={candidate.key} submitCandidate={submitCandidate} />
+                                </div>
                             ))}
                         <div onClick={addCandidate} className="w-1/3 flex flex-col items-center justify-center cursor-pointer bg-zinc-100 aspect-square text-zinc-400 hover:bg-zinc-900 hover:text-white">
                             <PlusIcon className="w-1/3" />

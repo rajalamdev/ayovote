@@ -115,15 +115,17 @@ export default function Code({ params }: { params: { slug: string, code: string 
                     </section>     
                     <section className="flex flex-col gap-4">
                     {!participantLoading && data?.candidates?.map((candidate: Candidate, index: number) => (
-                    <CandidateItem
-                        onClick={() => !participant && currentState === STATE_STARTED && setSelectedCandidate(candidate)}
-                        isSelected={selectedCandidate?.name === candidate.name}
-                        name={candidate.name}
-                        key={candidate.key}
-                        index={candidate.key}
-                        title={"Kandidat " + candidate.key}
-                        percentage={candidate.votes ? (candidate.votes / data?.totalVotes * 100) :0}
+                      <div key={index}>
+                        <CandidateItem
+                          onClick={() => !participant && currentState === STATE_STARTED && setSelectedCandidate(candidate)}
+                          isSelected={selectedCandidate?.name === candidate.name}
+                          name={candidate.name}
+                          key={candidate.key}
+                          index={candidate.key}
+                          title={"Kandidat " + candidate.key}
+                          percentage={candidate.votes ? (candidate.votes / data?.totalVotes * 100) :0}
                         />
+                      </div>
                     ))}
                     </section>
                     {(session?.user?.email != data?.publisher )&&!participant && currentState === STATE_STARTED && (
