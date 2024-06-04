@@ -5,10 +5,10 @@ import Countdown, { CountdownRendererFn } from "react-countdown";
 //     STATE_NOT_STARTED,
 //     STATE_STARTED, } from "@/app/participant/[...code]/page";
 import CountdownRenderer from "./CountdownRenderer";
-export const STATE_NOT_STARTED = "STATE_NOT_STARTED",
-  STATE_STARTED = "STATE_STARTED",
-  STATE_ENDED = "STATE_ENDED",
-  STATE_LOADING = "STATE_LOADING";
+const STATE_NOT_STARTED: string = "STATE_NOT_STARTED";
+const STATE_STARTED: string = "STATE_STARTED";
+const STATE_ENDED: string = "STATE_ENDED";
+const STATE_LOADING: string = "STATE_LOADING";
 
 interface Props {
   start: string;

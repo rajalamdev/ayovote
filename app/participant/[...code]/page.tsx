@@ -14,10 +14,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CountdownRendererFn, CountdownRenderProps } from 'react-countdown';
 
-export const STATE_NOT_STARTED = "STATE_NOT_STARTED",
-  STATE_STARTED = "STATE_STARTED",
-  STATE_ENDED = "STATE_ENDED",
-  STATE_LOADING = "STATE_LOADING";
+const STATE_NOT_STARTED: string = "STATE_NOT_STARTED";
+const STATE_STARTED: string = "STATE_STARTED";
+const STATE_ENDED: string = "STATE_ENDED";
+const STATE_LOADING: string = "STATE_LOADING";
 
 export default function Code({ params }: { params: { slug: string, code: string }}){
     const { data: session } = useSession();
