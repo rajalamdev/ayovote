@@ -1,10 +1,14 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import Countdown, { CountdownRendererFn } from "react-countdown";
-import { STATE_LOADING,  STATE_ENDED,
-    STATE_NOT_STARTED,
-    STATE_STARTED, } from "@/app/participant/[...code]/page";
+// import { STATE_LOADING,  STATE_ENDED,
+//     STATE_NOT_STARTED,
+//     STATE_STARTED, } from "@/app/participant/[...code]/page";
 import CountdownRenderer from "./CountdownRenderer";
+export const STATE_NOT_STARTED = "STATE_NOT_STARTED",
+  STATE_STARTED = "STATE_STARTED",
+  STATE_ENDED = "STATE_ENDED",
+  STATE_LOADING = "STATE_LOADING";
 
 interface Props {
   start: string;
