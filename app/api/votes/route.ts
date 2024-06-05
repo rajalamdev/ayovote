@@ -17,6 +17,15 @@ export async function GET(req: Request, res: Response){
             ]
         }
     })
+    try {
+        if (!result) {
+            throw new Error('Internal Server Error');
+        }
+    } catch (error: any) {
+        console.log(error)
+        console.log(result)
+        return new Response(error.message, { status: 500 });
+    }
 
     // console.log(result)
     
