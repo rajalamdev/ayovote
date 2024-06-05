@@ -3,7 +3,6 @@ import { getSession } from "next-auth/react";
 import { prisma } from "@/app/lib/prisma";
 import { generateCode } from "@/app/lib/generateCode";
 import {getServerSession} from "next-auth";
-// import { handler } from "../auth/[...nextauth]"
 
 export async function GET(req: Request, res: Response){
     const session = await getServerSession()

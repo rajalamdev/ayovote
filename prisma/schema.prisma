@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = "mongodb+srv://admin:9zs4P2TrKbYIYR38@ayovote.0wto7sk.mongodb.net"
+  url      = env("DATABASE_URL")
 }
 
 type Candidates{
