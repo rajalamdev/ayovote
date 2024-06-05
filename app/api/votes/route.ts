@@ -9,30 +9,31 @@ export async function GET(req: Request, res: Response){
     const session = await getServerSession()
     if (!session?.user) return new Response('Error', {status: 401})
     // console.log(session.user.email)
-    const result = await prisma.votes.findMany({
-        where: {
-            AND: [
-                { deleteAt: null},
-                { publisher: session?.user?.email! },
-            ]
-        }
-    })
     try {
+        const result = await prisma.votes.findMany({
+            where: {
+                AND: [
+                    { deleteAt: null},
+                    { publisher: session?.user?.email! },
+                ]
+            }
+        })
+        // console.log(result)
+        
+        const response = {
+            status: 200,
+            data: result,
+        }
+    
+        return Response.json(response)
+
         if (!result) {
             throw new Error('Internal Server Error');
         }
     } catch (error: any) {
-        return Response.json({ status: 500, message: error.message, result: result });
+        return Response.json({ status: 500, message: error.message, resul: error });
     }
 
-    // console.log(result)
-    
-    const response = {
-        status: 200,
-        data: result,
-    }
-
-    return Response.json(response)
 }
 
 export async function POST(req: Request){
