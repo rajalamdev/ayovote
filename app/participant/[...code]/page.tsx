@@ -20,7 +20,10 @@ const STATE_ENDED: string = "STATE_ENDED";
 const STATE_LOADING: string = "STATE_LOADING";
 
 export default function Code({ params }: { params: { slug: string, code: string }}){
-    const { data: session } = useSession();
+  const { data: session } = useSession();
+  if (!session) {
+    return <RestrictedPage />;
+  }
 
 
     const getSlug = params.code[0]

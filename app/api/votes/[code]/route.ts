@@ -20,6 +20,13 @@ export async function GET(req: Request, { params }: any ){
         }
     })
 
+    if (!votes){
+        return Response.json({
+            status: 404,
+            data: null
+        })
+    }
+
     // Get Participants of the Vote
     const participants = await prisma.participant.findMany({
         select:{
@@ -62,10 +69,7 @@ const result = {
     }
 
     // return res.json(result)
-    return Response.json({
-        message: "Success",
-        votes: response
-    })
+    return Response.json(response)
 }
 
 export async function DELETE(req: Request, { params }: any ){

@@ -11,6 +11,7 @@ registerLocale("id", id);
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import RestrictedPage from "@/app/components/page/RestrictedPage";
 
 export default function CreateVote(){
     const [startDate, setStartDate] = useState(new Date())
@@ -18,6 +19,9 @@ export default function CreateVote(){
     const [title, setTitle] = useState("")
     const [loading, setLoading] = useState(false)
     const session = useSession()
+    if (!session.data) {
+        return <RestrictedPage />;
+    }
     const router = useRouter()
 
     const [candidates, setCandidates] = useState<Candidate[]>([])

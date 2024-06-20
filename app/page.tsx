@@ -1,5 +1,6 @@
 "use client"
 // import { useSession, signIn, signOut } from "next-auth/react"
+
 import Image from "next/image";
 import Navbar from "./components/Navbar";
 import Button from "./components/Button";
@@ -11,10 +12,15 @@ import Link from "next/link";
 import { useVotes } from "./lib/useVotes";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import moment from "moment";
+import RestrictedPage from "./components/page/RestrictedPage";
 
 export default function Home() {
   // extracting data from usesession as session
   const { data: session } = useSession()
+  if (!session) {
+    return <RestrictedPage />;
+}
+  
   const { data: votesApi , isLoading: votesApiLoading } = useVotes();
   const [votes, setVotes] = useState<Vote[]>([])
 
@@ -86,13 +92,13 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {votes.length && votes && votes.map((vote: Vote, index: number) => (
+              {votes.length > 0 && votes && votes.map((vote: Vote, index: number) => (
                 <tr className="text-sm" key={index}>
                   <td className="text-left p-5 border border-zinc-200">{index + 1}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.title}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.candidates.map((candidate) => (
                     candidate.name +
-                      (index + 1 != vote.candidates.length ? " vs " : "")
+                    (index + 1 != vote.candidates.length ? " vs " : "")
                   ))}</td>
                   <td className="text-left p-5 border border-zinc-200 font-bold underline">{vote.code}</td>
                   <td className="text-left p-5 border border-zinc-200">{moment(vote.startDateTime).format('DD MMMM YYYY, h:mm:ss a')}</td>
@@ -107,6 +113,11 @@ export default function Home() {
                 ))}
               </tbody>
             </table>
+            {!votes.length && (
+              <div className="w-full border border-[#999] border-dashed flex justify-center py-4">
+                <p>Belum ada vote yang anda buat!</p>
+              </div>
+            )}
           </section>
         )}
       </main>

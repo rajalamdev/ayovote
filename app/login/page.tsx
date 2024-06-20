@@ -2,9 +2,11 @@
 import Button from "../components/Button";
 import { getProviders, signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
+import RestrictedPage from "../components/page/RestrictedPage";
 
 export default function Login(){
-  const { data: session } = useSession()
+  const { data: session } = useSession();
+
   const router = useRouter()
 
   if (session){

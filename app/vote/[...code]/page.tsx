@@ -12,15 +12,21 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useVote } from "@/app/lib/useVote";
+import RestrictedPage from "@/app/components/page/RestrictedPage";
 
 export default function EditVote({ params }: { params: { slug: string, code: string } }){
+    const { data: session } = useSession();
+    if (!session) {
+      return <RestrictedPage />;
+    }
+
     const getSlug = params.code[0]
     const { data: voteApi , isLoading: voteApiLoading } = useVote(getSlug);
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
     const [title, setTitle] = useState("")
     const [loading, setLoading] = useState(false)
-    const session = useSession()
+    
     const router = useRouter()
     
     const [candidates, setCandidates] = useState<Candidate[]>([])

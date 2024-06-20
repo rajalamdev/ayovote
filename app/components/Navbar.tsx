@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import Button from "./Button";
 import { useSession, signIn, signOut } from "next-auth/react"
+import Link from "next/link";
 
 export default function Navbar(){
     const session = useSession()
@@ -9,7 +10,9 @@ export default function Navbar(){
     return (
         <header>
             <nav className="container py-4 mx-auto flex justify-between">
-                <h1 className="text-2xl font-semibold">AyoVote</h1>
+                <Link href="/">
+                    <h1 className="text-2xl font-semibold">AyoVote</h1>
+                </Link>
                 {session.status === "loading" && 
                     <div className="flex gap-2 items-center">
                         <div className="w-10 aspect-square rounded-full bg-[#999] animate-pulse"></div>

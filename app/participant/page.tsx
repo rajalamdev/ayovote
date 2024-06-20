@@ -10,15 +10,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Participant(){
-    const router = useRouter();
-
   const { data: session } = useSession();
-
-  const [code, setCode] = useState("");
-
   if (!session) {
     return <RestrictedPage />;
   }
+    const router = useRouter();
+
+  
+  const [code, setCode] = useState("");
+
 
   const handleSubmit = async () => {
     if (code === "") {
@@ -30,6 +30,7 @@ export default function Participant(){
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         if (!data.votes) {
           alert("Kode yang anda masukkan salah");
           return;
