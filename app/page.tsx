@@ -17,9 +17,6 @@ import RestrictedPage from "./components/page/RestrictedPage";
 export default function Home() {
   // extracting data from usesession as session
   const { data: session } = useSession()
-  if (!session) {
-    return <RestrictedPage />;
-}
   
   const { data: votesApi , isLoading: votesApiLoading } = useVotes();
   const [votes, setVotes] = useState<Vote[]>([])
