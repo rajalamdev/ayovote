@@ -92,6 +92,8 @@ export async function DELETE(req: Request, { params }: any ){
 export async function PUT(req: Request, { params }: any ){
     const res = await req.json()
     const code = String(params.code)
+
+    console.log(code, res)
     const result = await prisma.votes.update({
         where: {
             code: code

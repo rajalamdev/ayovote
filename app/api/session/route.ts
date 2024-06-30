@@ -1,7 +1,16 @@
 import { getServerSession } from "next-auth"
 
-export async function GET(req: Request, res: Response){
-    console.log(req)
+export async function GET(){
     const session = await getServerSession()
-    if (!session?.user) return new Response('Error', {status: 401})
+    if (!session?.user) return Response.json({
+        status: 403,
+        message: "Unauthorize",
+        isLogin: false
+    })
+    
+    return Response.json({
+        status: 200,
+        message: "Authorize",
+        isLogin: true
+    })
 }

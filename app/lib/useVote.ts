@@ -4,10 +4,10 @@ export function useVote (code: string) {
     const fetcher = (url: string) => fetch(url).then((r) => r.json());
     const { data, mutate, error, isLoading } = useSWR(`/api/votes/${code}`, fetcher)
 
-    console.log(data)
+    // console.log(data)
    
     return {
-      data: data?.votes.data,
+      data: data?.data,
       mutate,
       isLoading,
       isError: error

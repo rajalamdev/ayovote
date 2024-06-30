@@ -7,11 +7,12 @@ interface Props {
   index: number;
   percentage?: number;
   onClick?: () => void;
+  isMe?: boolean;
 }
 
 export default function CandidateItem(props: Props) {
   return (
-    <div className="flex flex-row border border-zinc-100 p-5 rounded-md space-x-3">
+    <div className="flex flex-row border border-zinc-200 p-5 rounded-md space-x-4">
       <div className="w-12 h-12 font-bold text-lg items-center flex justify-center bg-zinc-100 text-center">
         {props.index}
       </div>
@@ -31,11 +32,9 @@ export default function CandidateItem(props: Props) {
       </div>
       <div
         onClick={props.onClick}
-        className={`flex w-20 aspect-square rounded-md items-center justify-center cursor-pointer ${
-          props.isSelected
-            ? "bg-green-500 hover:bg-green-600 text-white"
-            : "bg-zinc-100 hover:bg-zinc-200 "
-        }`}
+        className={`flex w-20 aspect-square rounded-md items-center justify-center cursor-pointer ${props.isMe ? "bg-zinc-400 opacity-50 cursor-not-allowed" : props.isSelected
+        ? "bg-green-500 hover:bg-green-600 text-white"
+        : "bg-zinc-100 hover:bg-zinc-200 "}`}
       >
         <span>
           <CheckIcon className="w-7 h-7" />

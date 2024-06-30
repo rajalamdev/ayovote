@@ -66,13 +66,13 @@ export default function Home() {
             </Link>
           </div>
         </section>
-        {votesApiLoading && !session && (
+        {/* {votesApiLoading && !session && (
           <>
             <div className="bg-[#999] w-full h-12 rounded animate-pulse"></div>
             <div className="bg-[#999] w-full h-12 rounded animate-pulse mt-2"></div>
             <div className="bg-[#999] w-full h-12 rounded animate-pulse mt-2"></div>
           </>
-        )}
+        )} */}
         {session && (
           <section>
             <h2 className="font-semibold">Vote yang saya buat</h2>
@@ -89,19 +89,21 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
+              {/* {console.log(votes)} */}
               {votes.length > 0 && votes && votes.map((vote: Vote, index: number) => (
                 <tr className="text-sm" key={index}>
                   <td className="text-left p-5 border border-zinc-200">{index + 1}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.title}</td>
-                  <td className="text-left p-5 border border-zinc-200">{vote.candidates.map((candidate) => (
-                    candidate.name +
-                    (index + 1 != vote.candidates.length ? " vs " : "")
+                  <td className="text-left p-5 border border-zinc-200">{vote.candidates.map((candidate, idx) => (
+                    candidate.name + (idx + 1 !== vote.candidates.length ? " vs " : "")
                   ))}</td>
                   <td className="text-left p-5 border border-zinc-200 font-bold underline">{vote.code}</td>
                   <td className="text-left p-5 border border-zinc-200">{moment(vote.startDateTime).format('DD MMMM YYYY, h:mm:ss a')}</td>
                   <td className="text-left p-5 border border-zinc-200">{moment(vote.endDateTime).format('DD MMMM YYYY, h:mm:ss a')}</td>
                   <td className="text-left p-5 border border-zinc-200 flex gap-4 items-center">
-                    <LinkIcon className="w-5" />
+                    <Link href={`/vote/${vote.code}`}>
+                      <LinkIcon className="w-5" />
+                    </Link>
                     <button onClick={() => deleteHandler(vote.code)} className="">
                       <TrashIcon className="w-5" />
                     </button>

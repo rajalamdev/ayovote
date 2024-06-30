@@ -19,6 +19,7 @@
     "react-datepicker": "^6.9.0",
     "react-dom": "^18",
     "react-loading-skeleton": "^3.4.0",
+    "react-use": "^17.5.0",
     "swr": "^2.2.5"
   },
   "devDependencies": {
