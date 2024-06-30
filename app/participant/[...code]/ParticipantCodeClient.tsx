@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CountdownRendererFn, CountdownRenderProps } from 'react-countdown';
+import { Chart } from "react-google-charts";
 
 const STATE_NOT_STARTED: string = "STATE_NOT_STARTED";
 const STATE_STARTED: string = "STATE_STARTED";
@@ -100,6 +101,14 @@ export default function ParticipantCodeClient({ params }: { params: { slug: stri
         }
       }, [participant,data]);
   
+      const dataPie = [
+        ["Kandidat", "Vote"],
+        ...(data?.candidates ? data.candidates.map((candidate: any) => [candidate.name, candidate.votes]) : [])
+      ];
+      
+      const options = {
+        title: "Total Suara",
+      };
     return (
         <>
             <Navbar />
@@ -136,7 +145,16 @@ export default function ParticipantCodeClient({ params }: { params: { slug: stri
               type="primary"
               isLoading={participantLoading}
             />)}
-          
+          {/* {JSON.stringify(data?.candidates)} */}
+          <div className="w-1/2 flex justify-center">
+            <Chart
+              chartType="PieChart"
+              data={dataPie}
+              options={options}
+              width={"100%"}
+              height={"400px"}
+            />
+          </div>
          {participant && <span className="bg-zinc-100 py-2 px-3">Kamu sudah memilih, dan tidak diperbolehkan untuk mengganti pilihan</span>}
          {session?.user?.email === data?.publisher && (<span className="bg-zinc-100 py-2 px-3">Pembuat vote tidak dapat melakukan voting</span>)}
                 </form>
