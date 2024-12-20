@@ -74,7 +74,7 @@ export default function Home() {
           </>
         )} */}
         {session && (
-          <section>
+          <section className="overflow-x-auto">
             <h2 className="font-semibold">Vote yang saya buat</h2>
             <table className="w-full table-auto">
               <thead>
@@ -91,7 +91,7 @@ export default function Home() {
               <tbody>
               {/* {console.log(votes)} */}
               {votes.length > 0 && votes && votes.map((vote: Vote, index: number) => (
-                <tr className="text-sm" key={index}>
+                <tr className="text-sm flex" key={index}>
                   <td className="text-left p-5 border border-zinc-200">{index + 1}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.title}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.candidates.map((candidate, idx) => (
@@ -100,7 +100,7 @@ export default function Home() {
                   <td className="text-left p-5 border border-zinc-200 font-bold underline">{vote.code}</td>
                   <td className="text-left p-5 border border-zinc-200">{moment(vote.startDateTime).format('DD MMMM YYYY, h:mm:ss a')}</td>
                   <td className="text-left p-5 border border-zinc-200">{moment(vote.endDateTime).format('DD MMMM YYYY, h:mm:ss a')}</td>
-                  <td className="text-left p-5 border border-zinc-200 flex gap-4 items-center">
+                  <td className="text-left p-5 border border-zinc-200 flex gap-4 items-center h-full flex-1">
                     <Link href={`/vote/${vote.code}`}>
                       <LinkIcon className="w-5" />
                     </Link>
@@ -113,8 +113,10 @@ export default function Home() {
               </tbody>
             </table>
             {!votes.length && (
-              <div className="w-full border border-[#999] border-dashed flex justify-center py-4">
-                <p>Belum ada vote yang anda buat!</p>
+              <div className="overflow-x-auto flex justify-center"> {/* Menambahkan overflow-x-auto di sini */}
+                <div className="w-full border border-[#999] border-dashed flex justify-center py-4">
+                  <p>Belum ada vote yang anda buat!</p>
+                </div>
               </div>
             )}
           </section>
