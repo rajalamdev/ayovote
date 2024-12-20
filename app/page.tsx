@@ -91,7 +91,7 @@ export default function Home() {
               <tbody>
               {/* {console.log(votes)} */}
               {votes.length > 0 && votes && votes.map((vote: Vote, index: number) => (
-                <tr className="text-sm flex" key={index}>
+                <tr className="text-sm" key={index}>
                   <td className="text-left p-5 border border-zinc-200">{index + 1}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.title}</td>
                   <td className="text-left p-5 border border-zinc-200">{vote.candidates.map((candidate, idx) => (
@@ -100,7 +100,7 @@ export default function Home() {
                   <td className="text-left p-5 border border-zinc-200 font-bold underline">{vote.code}</td>
                   <td className="text-left p-5 border border-zinc-200">{moment(vote.startDateTime).format('DD MMMM YYYY, h:mm:ss a')}</td>
                   <td className="text-left p-5 border border-zinc-200">{moment(vote.endDateTime).format('DD MMMM YYYY, h:mm:ss a')}</td>
-                  <td className="text-left p-5 border border-zinc-200 flex gap-4 items-center h-full flex-1">
+                  <td className="text-left p-5 border border-zinc-200 flex gap-4 items-center h-full">
                     <Link href={`/vote/${vote.code}`}>
                       <LinkIcon className="w-5" />
                     </Link>
