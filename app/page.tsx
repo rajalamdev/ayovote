@@ -135,11 +135,26 @@ export default function Home() {
   const exportSingleVotePDF = (vote: Vote) => {
     const doc = new jsPDF();
     
-    // Add title
+    // Calculate status
+    const now = new Date();
+    const startDate = new Date(vote.startDateTime);
+    const endDate = new Date(vote.endDateTime);
+    
+    let status = "Belum Dimulai";
+    if (now > endDate) {
+      status = "Sudah Selesai";
+    } else if (now >= startDate && now <= endDate) {
+      status = "Sedang Berlangsung";
+    }
+    
+    // Add title and metadata
     doc.setFontSize(16);
     doc.text(`Hasil Voting: ${vote.title}`, 14, 15);
     doc.setFontSize(10);
     doc.text(`Diekspor pada: ${moment().format('DD MMMM YYYY, HH:mm')}`, 14, 22);
+    doc.text(`Status: ${status}`, 14, 27);
+    doc.text(`Dimulai pada: ${moment(vote.startDateTime).format('DD MMMM YYYY, HH:mm')}`, 14, 32);
+    doc.text(`Diakhiri pada: ${moment(vote.endDateTime).format('DD MMMM YYYY, HH:mm')}`, 14, 37);
 
     // Create table
     autoTable(doc, {
@@ -150,7 +165,7 @@ export default function Home() {
         // Add vote count logic here if available
         '0' // Placeholder for vote count
       ]),
-      startY: 25,
+      startY: 42, // Adjusted startY to accommodate the new header information
       styles: { fontSize: 8 },
       headStyles: { fillColor: [0, 0, 0] },
     });
@@ -159,9 +174,21 @@ export default function Home() {
   };
 
   const getSingleVoteCSV = (vote: Vote) => {
+    const now = new Date();
+    const startDate = new Date(vote.startDateTime);
+    const endDate = new Date(vote.endDateTime);
+    
+    let status = "Belum Dimulai";
+    if (now > endDate) {
+      status = "Sudah Selesai";
+    } else if (now >= startDate && now <= endDate) {
+      status = "Sedang Berlangsung";
+    }
+
     return [{
       Judul: vote.title,
       Kode: vote.code,
+      Status: status,
       'Tanggal Mulai': moment(vote.startDateTime).format('DD MMMM YYYY, h:mm:ss a'),
       'Tanggal Selesai': moment(vote.endDateTime).format('DD MMMM YYYY, h:mm:ss a'),
       Kandidat: vote.candidates.map(c => c.name).join(' vs '),
