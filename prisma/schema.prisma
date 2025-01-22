@@ -17,6 +17,7 @@ type Candidates{
   name String
   key Int
   title String
+  image String?
 }
 
 model votes {
