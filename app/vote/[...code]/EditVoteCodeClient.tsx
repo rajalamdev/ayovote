@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { useVote } from "@/app/lib/useVote";
 import RestrictedPage from "@/app/components/page/RestrictedPage";
 import { showAlert } from "@/app/components/Alert";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EditVoteCodeClient({ params }: { params: { slug: string, code: string } }){
     const { data: session } = useSession();
@@ -75,55 +77,66 @@ export default function EditVoteCodeClient({ params }: { params: { slug: string,
         e.preventDefault()
         //Validasi
         if (title === "") {
-          alert("Judul tidak boleh kosong");
+          toast.error("Judul tidak boleh kosong", {
+            position: "top-center",
+          });
           return;
         }
         if (candidates.length < 2) {
-          alert("Minimal ada 2 kandidat");
+          toast.error("Minimal ada 2 kandidat", {
+            position: "top-center",
+          });
           return;
         }
         if (startDate > endDate) {
-          alert("Tanggal mulai tidak boleh lebih besar dari tanggal selesai");
+          toast.error("Tanggal mulai tidak boleh lebih besar dari tanggal selesai", {
+            position: "top-center",
+          });
           return;
         }
         if (candidates.some((c) => c.name === "")) {
-          alert("Nama Kandidat tidak boleh kosong");
+          toast.error("Nama Kandidat tidak boleh kosong", {
+            position: "top-center",
+          });
           return;
         }
     
         setLoading(true);
-         //Mengirim data ke API
-        fetch(`/api/votes/${getSlug}`, {
+        toast.promise(
+          fetch(`/api/votes/${getSlug}`, {
             method: "PUT",
             headers: {
-            "Content-Type": "application/json",
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
-            code: getSlug,
-            title,
-            startDate,
-            endDate,
-            //candidates with no votes
-            candidates: candidates.map((c) => ({
+              code: getSlug,
+              title,
+              startDate,
+              endDate,
+              candidates: candidates.map((c) => ({
                 name: c.name,
                 title: c.title,
-                key : c.key
-            })),
-            publisher: session?.user?.email,
+                key: c.key
+              })),
+              publisher: session?.user?.email,
             }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-            showAlert({title:"Yay!",subtitle:"Vote berhasil diubah"});
-            setTimeout(() => {
-                router.push("/")
-            }, 1000)
-            });
-      };
+          }).then(res => {
+            if (!res.ok) throw new Error('Failed to update');
+            setTimeout(() => router.push("/"), 1500);
+            return res.json();
+          }),
+          {
+            pending: 'Mengupdate vote...',
+            success: 'Vote berhasil diupdate 👌',
+            error: 'Gagal mengupdate vote 🤯'
+          }
+        );
+    };
 
     return (
         <>
             <Navbar />
+            <ToastContainer />
             <main className="container mx-auto py-10">
                 <form onSubmit={updateVote}>
                     <section className="space-y-8">
